@@ -34,47 +34,75 @@ case "do-what-it-says":
 
 function concertSearch() {
 
-    var giphyKey = "&api_key=G5D2MIcE6V9sCDXy9QtdjqYySLgcyNIp";
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchFor + giphyKey + "&limit=10";
+  var concert = searchFor;
+  var queryURL = "https://rest.bandsintown.com/artists/" + concert + "/events?app_id=codingbootcamp";
 
-    axios.get(queryURL)
-    .then(response => {
+  axios.get(queryURL)
+  .then(function(response) { 
 
-      var results = response.data;
-      console.log(queryURL);
-      displayConcerts(results);
-      
-    })
-    .catch(error => {
-      console.log(error);
-    });
-
-}
-
-function displayConcerts(results) {
+    var results = response.data;
+    console.log(queryURL); 
     console.log(results);
-    console.log("yay");
+    // displayConcerts(results);
 
-    var data = results.data
-
-    for (var i = 0; i < data.length; i++) {
-        console.log("value: " + data[i].rating);
-    }
-
+  })
+  .catch(function (error) {
+      console.log(error);
+  });
 }
+
+
+// function displayConcerts(results) {
+//     console.log(results);
+//     console.log("yay");
+
+//     var data = results.data
+
+//     for (var i = 0; i < data.length; i++) {
+//         console.log("value: " + data[i].rating);
+//     }
+// }
 
 function spotifySearch() {
 
-  spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
-    if (err) {
-      return console.log('Error occurred: ' + err);
-    }
-   
-    console.log(data); 
-    console.log("yay");
-  });
+  searchArr = {type: "track", query: "Roundabout", limit: 3}
+
+  spotify.search(searchArr, function(err, results) {
+  if (err) {
+    return console.log('Error occurred: ' + err);
+  }
+  
+  var data = results.tracks;
+  displaySpotify(data);
+
+});
 
 }
+
+function displaySpotify(data) {
+  console.log("yay");
+
+  var results = data.items;
+  console.log(results);
+  // console.log(JSON.stringify(results, null, 2));
+
+  for (var i = 0; i < results.length; i++) {
+      // console.log("i: " + i)
+      console.log("Song name: " + results[i].name);
+      console.log("Preview URL: " + results[i].preview_url);
+
+      for (j = 0; j < results[i].artists.length; j++) {     
+        console.log("Artists: " + results[i].artists[j].name);
+      }
+
+      for (k = 0; k < results[i].album.length; k++) {     
+        console.log("Album: " + results[i].album[k].name);
+        console.log("--------------------");
+      }
+  }
+}
+
+
 
 function movieSearch() {
 
@@ -123,6 +151,6 @@ function displayMovie(results) {
 }
 
 
-function do-what-it-says() {
-  console.log("yay");
-}
+// function do-what-it-says() {
+//   console.log("yay");
+// }
