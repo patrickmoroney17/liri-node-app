@@ -6,6 +6,9 @@ var spotify = new Spotify(keys.spotify)
 
 const axios = require("axios");
 
+var moment = require('moment');
+moment().format();
+
 // Load the fs package to read and write
 var fs = require("fs");
 
@@ -38,30 +41,25 @@ function concertSearch() {
   var queryURL = "https://rest.bandsintown.com/artists/" + concert + "/events?app_id=codingbootcamp";
 
   axios.get(queryURL)
-  .then(function(response) { 
 
-    var results = response.data;
-    console.log(queryURL); 
-    console.log(results);
-    // displayConcerts(results);
+  .then(function(response) {  
 
+    console.log("yay");  
+    for (var i = 0; i < response.data.length; i++) {
+
+        var eventdate = response.data[i].datetime;
+        var eventDate = eventdate.split("T");
+
+        console.log("Venue Name: " + response.data[i].venue.name);
+        console.log("Venue Location: " + response.data[i].venue.city)
+        console.log("Event date: " + eventDate);
+        console.log("---------------------------------------");
+    }
   })
   .catch(function (error) {
       console.log(error);
-  });
+  });     
 }
-
-
-// function displayConcerts(results) {
-//     console.log(results);
-//     console.log("yay");
-
-//     var data = results.data
-
-//     for (var i = 0; i < data.length; i++) {
-//         console.log("value: " + data[i].rating);
-//     }
-// }
 
 function spotifySearch() {
 
