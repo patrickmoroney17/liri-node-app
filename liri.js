@@ -63,44 +63,26 @@ function concertSearch() {
 
 function spotifySearch() {
 
-  searchArr = {type: "track", query: "Roundabout", limit: 3}
+  var song = searchFor;
+  searchArr = {type: "track", query: song, limit: 3}
 
-  spotify.search(searchArr, function(err, results) {
-  if (err) {
-    return console.log('Error occurred: ' + err);
-  }
-  
-  var data = results.tracks;
-  displaySpotify(data);
+  spotify.search(searchArr)
+  .then(function(response) {
 
-});
+    for (var i = 0; i < 3; i++) {
 
+      console.log("Artist(s): " + response.tracks.items[i].artists[0].name);  
+      console.log("Song Name: " + response.tracks.items[i].name);
+      console.log("Album Name: " + response.tracks.items[i].album.name);
+      console.log("Preview Link: " + response.tracks.items[i].preview_url);
+      console.log("---------------------------------------");
+
+    }
+  })
+  .catch(function (error) {
+      console.log(error);
+  });     
 }
-
-function displaySpotify(data) {
-  console.log("yay");
-
-  var results = data.items;
-  console.log(results);
-  // console.log(JSON.stringify(results, null, 2));
-
-  for (var i = 0; i < results.length; i++) {
-      // console.log("i: " + i)
-      console.log("Song name: " + results[i].name);
-      console.log("Preview URL: " + results[i].preview_url);
-
-      for (j = 0; j < results[i].artists.length; j++) {     
-        console.log("Artists: " + results[i].artists[j].name);
-      }
-
-      for (k = 0; k < results[i].album.length; k++) {     
-        console.log("Album: " + results[i].album[k].name);
-        console.log("--------------------");
-      }
-  }
-}
-
-
 
 function movieSearch() {
 
