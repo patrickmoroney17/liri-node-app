@@ -98,9 +98,9 @@ function movieSearch() {
     displayMovie(results);
     
   })
-  .catch(error => {
+  .catch(function (error) {
     console.log(error);
-  });
+}); 
 
 }
 
@@ -145,6 +145,7 @@ function doWhatItSays() {
 
       var dataArr = data.split(",");
       searchArr = {type: "track", query: dataArr[1], limit: 3}
+
       spotify.search(searchArr)
       .then(function(response) {
 
