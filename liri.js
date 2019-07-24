@@ -31,8 +31,8 @@ case "movie-this":
   break;
 
 case "do-what-it-says":
-    doWhatItSays();
-    break;
+  doWhatItSays();
+  break;
 }
 
 function concertSearch() {
@@ -69,9 +69,10 @@ function spotifySearch() {
   spotify.search(searchArr)
   .then(function(response) {
 
+    console.log(response);
     for (var i = 0; i < 3; i++) {
 
-      console.log("Artist(s): " + response.tracks.items[i].artists[0].name);  
+      console.log("Artists: " + response.tracks.items[i].artists[0].name);  
       console.log("Song Name: " + response.tracks.items[i].name);
       console.log("Album Name: " + response.tracks.items[i].album.name);
       console.log("Preview Link: " + response.tracks.items[i].preview_url);
@@ -90,7 +91,9 @@ function movieSearch() {
   var queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=trilogy";
 
   axios.get(queryURL)
-  .then(response => {
+  .then(function(response) {
+
+    console.log(response);
 
     var results = response.data;
     displayMovie(results);
@@ -103,6 +106,7 @@ function movieSearch() {
 }
 
 function displayMovie(results) {
+  console.log(results);
 
   var title = results.Title;
   console.log("Title: " + title);
@@ -110,10 +114,10 @@ function displayMovie(results) {
   var released = results.Released;
   console.log("Released: " + released);
 
-  var rating = results.imdbRated;
+  var rating = results.imdbRating;
   console.log("IMDB Rating: " + rating);
 
-  var rottenTR = results.Ratings.Source;
+  var rottenTR = results.Ratings[1].Value;
   console.log("Rotten Tomatoes Rating: " + rottenTR);
 
   var country = results.Country;
