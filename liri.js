@@ -9,7 +9,6 @@ const axios = require("axios");
 var moment = require('moment');
 moment().format();
 
-// Load the fs package to read and write
 var fs = require("fs");
 
 // Take two arguments.
@@ -50,6 +49,7 @@ function concertSearch() {
         var eventdate = response.data[i].datetime;
         var eventDate = eventdate.split("T");
 
+        console.log("---------------------------------------");
         console.log("Venue Name: " + response.data[i].venue.name);
         console.log("Venue Location: " + response.data[i].venue.city)
         console.log("Event date: " + eventDate);
@@ -136,6 +136,32 @@ function displayMovie(results) {
 }
 
 
-// function do-what-it-says() {
-//   console.log("yay");
-// }
+function doWhatItSays() {
+
+  fs.readFile("random.txt", "utf8", function(error, data) {
+      if (error) {
+          return console.log(error);
+      }
+
+      var dataArr = data.split(",");
+      searchArr = {type: "track", query: dataArr[1], limit: 3}
+      spotify.search(searchArr)
+      .then(function(response) {
+
+        console.log(response);
+        for (var i = 0; i < 3; i++) {
+    
+          console.log("---------------------------------------");
+          console.log("Artists: " + response.tracks.items[i].artists[0].name);  
+          console.log("Song Name: " + response.tracks.items[i].name);
+          console.log("Album Name: " + response.tracks.items[i].album.name);
+          console.log("Preview Link: " + response.tracks.items[i].preview_url);
+          console.log("---------------------------------------");
+    
+        }
+      })
+      .catch(function (error) {
+          console.log(error);
+      }); 
+  })
+}
