@@ -72,6 +72,7 @@ function spotifySearch() {
     console.log(response);
     for (var i = 0; i < 3; i++) {
 
+      console.log("---------------------------------------");
       console.log("Artists: " + response.tracks.items[i].artists[0].name);  
       console.log("Song Name: " + response.tracks.items[i].name);
       console.log("Album Name: " + response.tracks.items[i].album.name);
@@ -93,8 +94,6 @@ function movieSearch() {
   axios.get(queryURL)
   .then(function(response) {
 
-    console.log(response);
-
     var results = response.data;
     displayMovie(results);
     
@@ -106,9 +105,10 @@ function movieSearch() {
 }
 
 function displayMovie(results) {
-  console.log(results);
+  // console.log(results);
 
   var title = results.Title;
+  console.log("---------------------------------------");
   console.log("Title: " + title);
 
   var released = results.Released;
@@ -131,6 +131,7 @@ function displayMovie(results) {
 
   var actors = results.Actors;
   console.log("Actors: " + actors);
+  console.log("---------------------------------------");
 
 }
 
