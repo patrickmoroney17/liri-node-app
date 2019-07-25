@@ -36,14 +36,13 @@ case "do-what-it-says":
 
 function concertSearch() {
 
-  var concert = searchFor;
-  var queryURL = "https://rest.bandsintown.com/artists/" + concert + "/events?app_id=codingbootcamp";
+  // var concert = searchFor;
+  var queryURL = "https://rest.bandsintown.com/artists/" + searchFor + "/events?app_id=codingbootcamp";
 
   axios.get(queryURL)
 
   .then(function(response) {  
 
-    console.log("yay");  
     for (var i = 0; i < response.data.length; i++) {
 
         var eventdate = response.data[i].datetime;
@@ -63,13 +62,11 @@ function concertSearch() {
 
 function spotifySearch() {
 
-  var song = searchFor;
-  searchArr = {type: "track", query: song, limit: 3}
+  searchArr = {type: "track", query: searchFor, limit: 3}
 
   spotify.search(searchArr)
   .then(function(response) {
 
-    console.log(response);
     for (var i = 0; i < 3; i++) {
 
       console.log("---------------------------------------");
@@ -88,8 +85,11 @@ function spotifySearch() {
 
 function movieSearch() {
 
-  var movie = searchFor;
-  var queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=trilogy";
+  if (!searchFor) {
+    searchFor = "Mr Nobody";
+  }
+
+  var queryURL = "https://www.omdbapi.com/?t=" + searchFor + "&apikey=trilogy";
 
   axios.get(queryURL)
   .then(function(response) {
@@ -105,32 +105,16 @@ function movieSearch() {
 }
 
 function displayMovie(results) {
-  // console.log(results);
 
-  var title = results.Title;
   console.log("---------------------------------------");
-  console.log("Title: " + title);
-
-  var released = results.Released;
-  console.log("Released: " + released);
-
-  var rating = results.imdbRating;
-  console.log("IMDB Rating: " + rating);
-
-  var rottenTR = results.Ratings[1].Value;
-  console.log("Rotten Tomatoes Rating: " + rottenTR);
-
-  var country = results.Country;
-  console.log("Country where movie was produced: " + country);
-
-  var language = results.Language;
-  console.log("Language of movie: " + language);
-
-  var plot = results.Plot;
-  console.log("Plot: " + plot);
-
-  var actors = results.Actors;
-  console.log("Actors: " + actors);
+  console.log("Title: " + results.Title);
+  console.log("Released: " + results.Released);
+  console.log("IMDB Rating: " + results.imdbRating);
+  console.log("Rotten Tomatoes Rating: " + results.Ratings[1].Value);
+  console.log("Country where movie was produced: " + results.Country);
+  console.log("Language of movie: " + results.Language);
+  console.log("Plot: " + results.Plot);
+  console.log("Actors: " + results.Actors);
   console.log("---------------------------------------");
 
 }
@@ -149,7 +133,6 @@ function doWhatItSays() {
       spotify.search(searchArr)
       .then(function(response) {
 
-        console.log(response);
         for (var i = 0; i < 3; i++) {
     
           console.log("---------------------------------------");
